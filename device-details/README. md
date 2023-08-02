@@ -1,0 +1,27 @@
+
+# Instructions to run the application
+
+This is a spring boot application which will expose 2 GET endpoints
+  GET -  get all devices (/devices)
+  GET -  get a particular device details (/devices/{deviceId})
+
+API can be accessed from `http://localhost:8080/swagger-ui/index.html#`
+
+Server is returning some sample data (showed a couple ways here and can be implemented in various ways)
+
+Implemented RestClient, which will run on scheduled basis (configured to run every 5 mins) and scheduler will
+on application startup.
+
+Added a few junits can be extended for various scenarios
+
+### Improve the server implementation
+We can store this data in either in RDBMS(Postgres, Aurora, Oracle etc) or NoSql DB (DynamoDB or MongoDB)
+
+Consider if we go with DynamoDB
+ - We can define HashKey on deviceId column and based on requirement we can define range column as well
+ - We can implement few other endpoints (PUT/DELETE) to perform CRUD operations on this data and store this
+ corresponding database
+ - Device data can be stored in a single table, but it can be split into multiple tables based on requirements
+ - We can sanitize the data before saving into DB
+ - DB can be configured to be multi AZ(global tables) for a multi region deployments. Also we can enable snapshots
+ and backup (helpful in case of DR Scenarios)
